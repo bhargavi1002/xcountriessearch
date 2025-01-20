@@ -38,11 +38,10 @@ const Countries = () => {
         <div className="country-grid">
         {filteredCountries.length > 0 ? (
           filteredCountries.map((country) => (
-            <CountryCard 
-              key={country.cca3} 
-              name={country.name.common} 
-              flag={country.flags.png} 
-            />
+            <div className="countryCard">
+      <img src={country.flags.png} alt={`${country.name.common}'s flag`} />
+      <p>{country.name.common}</p>
+    </div>
           ))
         ) : (
            <div></div>
