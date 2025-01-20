@@ -10,13 +10,14 @@ const Countries = () => {
     const fetchCountries = async () =>{
       try{
       const res = await fetch('https://restcountries.com/v3.1/all');
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
       const data = await res.json();
-      console.log(data);
       setCountries(data);
-   }
-   catch(err){
-      console.log('error fetching countries', err)
-   }
+    } catch (err) {
+      console.error('Error fetching countries:', err);
+    }
   };
 
   fetchCountries();
