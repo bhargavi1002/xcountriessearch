@@ -78,7 +78,7 @@ const CountrySearchApp = () => {
     const fetchCountries = async () => {
       try {
         const response = await fetch(
-          "https://restcountries.com/v3.1/all"
+          " https://countries-search-data-prod-812920491762.asia-south1.run.app/countries"
         );
         if (!response.ok) {
           throw new Error("Failed to fetch countries");
@@ -97,7 +97,7 @@ const CountrySearchApp = () => {
   useEffect(() => {
     // Filtering countries based on search term
     const filtered = countries.filter((country) =>
-      country.name.common.toLowerCase().includes(searchTerm.toLowerCase())
+      country.common.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setFilteredCountries(filtered);
   }, [searchTerm, countries]);
@@ -139,8 +139,8 @@ const CountrySearchApp = () => {
               }}
             >
               <img
-                src={country.flags.png}
-                alt={`${country.name.common} flag`}
+                src={country.png}
+                alt={`${country.common} flag`}
                 style={{
                   width: "100%",
                   height: "100px",
@@ -149,7 +149,7 @@ const CountrySearchApp = () => {
                   marginBottom: "10px",
                 }}
               />
-              <p style={{ fontSize: "14px", fontWeight: "bold" }}>{country.name.common}</p>
+              <p style={{ fontSize: "14px", fontWeight: "bold" }}>{country.common}</p>
             </div>
           ))
         ) : (
