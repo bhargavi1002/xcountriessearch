@@ -162,19 +162,17 @@
 
 // export default CountrySearchApp;
 import React, { useEffect, useState } from "react";
+import CountryCard from "./CountryCard";
 
-const CountrySearchApp = () => {
+const Countries = () => {
   const [countries, setCountries] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredCountries, setFilteredCountries] = useState([]);
 
   useEffect(() => {
-    // Fetching country data from the API
     const fetchCountries = async () => {
       try {
-        const response = await fetch(
-          "https://restcountries.com/v3.1/all"
-        );
+        const response = await fetch("https://restcountries.com/v3.1/all");
         if (!response.ok) {
           throw new Error("Failed to fetch countries");
         }
@@ -184,7 +182,7 @@ const CountrySearchApp = () => {
           flag: country.flags.svg,
         }));
         setCountries(formattedData);
-        setFilteredCountries(formattedData); // Initialize with all countries
+        setFilteredCountries(formattedData);
       } catch (error) {
         console.error("Error fetching countries:", error);
       }
@@ -194,7 +192,6 @@ const CountrySearchApp = () => {
   }, []);
 
   useEffect(() => {
-    // Filtering countries based on search term
     const filtered = countries.filter((country) =>
       country.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
@@ -225,31 +222,7 @@ const CountrySearchApp = () => {
       >
         {filteredCountries.length > 0 ? (
           filteredCountries.map((country) => (
-            <div
-              key={country.name}
-              className="countryCard"
-              style={{
-                border: "1px solid #ddd",
-                borderRadius: "10px",
-                padding: "10px",
-                width: "150px",
-                textAlign: "center",
-                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-              }}
-            >
-              <img
-                src={country.flag}
-                alt={`${country.name} flag`}
-                style={{
-                  width: "100%",
-                  height: "100px",
-                  objectFit: "cover",
-                  borderRadius: "5px",
-                  marginBottom: "10px",
-                }}
-              />
-              <div style={{ fontSize: "14px", fontWeight: "bold" }}>{country.name}</div>
-            </div>
+            <CountryCard key={country.name} name={country.name} flag={country.flag} />
           ))
         ) : (
           <p style={{ fontSize: "18px", color: "#888" }}>No countries found</p>
@@ -259,5 +232,5 @@ const CountrySearchApp = () => {
   );
 };
 
-export default CountrySearchApp;
+export default Countries;
 
