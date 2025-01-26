@@ -38,7 +38,6 @@ const Countries = () => {
         placeholder="Search for a country"
         value={searchText}
         onChange={(e) => setSearchText(e.target.value)}
-        data-testid="search-input"
       />
 
       {loading ? (
@@ -54,7 +53,7 @@ const Countries = () => {
                   src={country.flags.png}
                   alt={`${country.name.common}'s flag`}
                 />
-                <p>{country.name.common}</p>
+                <h2>{country.name.common}</h2>
               </div>
             ))
           ) : (
