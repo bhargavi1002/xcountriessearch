@@ -161,7 +161,6 @@
 // };
 
 // export default CountrySearchApp;
-
 import React, { useEffect, useState } from "react";
 
 const CountrySearchApp = () => {
@@ -249,7 +248,7 @@ const CountrySearchApp = () => {
                   marginBottom: "10px",
                 }}
               />
-              <p style={{ fontSize: "14px", fontWeight: "bold" }}>{country.name}</p>
+              <div style={{ fontSize: "14px", fontWeight: "bold" }}>{country.name}</div>
             </div>
           ))
         ) : (
