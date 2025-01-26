@@ -66,6 +66,102 @@
 // };
 
 // export default Countries;
+// import React, { useEffect, useState } from "react";
+
+// const CountrySearchApp = () => {
+//   const [countries, setCountries] = useState([]);
+//   const [searchTerm, setSearchTerm] = useState("");
+//   const [filteredCountries, setFilteredCountries] = useState([]);
+
+//   useEffect(() => {
+//     // Fetching country data from the API
+//     const fetchCountries = async () => {
+//       try {
+//         const response = await fetch(
+//           " https://countries-search-data-prod-812920491762.asia-south1.run.app/countries"
+//         );
+//         if (!response.ok) {
+//           throw new Error("Failed to fetch countries");
+//         }
+//         const data = await response.json();
+//         setCountries(data);
+//         setFilteredCountries(data); // Initialize with all countries
+//       } catch (error) {
+//         console.error("Error fetching countries:", error);
+//       }
+//     };
+
+//     fetchCountries();
+//   }, []);
+
+//   useEffect(() => {
+//     // Filtering countries based on search term
+//     const filtered = countries.filter((country) =>
+//       country.common.toLowerCase().includes(searchTerm.toLowerCase())
+//     );
+//     setFilteredCountries(filtered);
+//   }, [searchTerm, countries]);
+
+//   return (
+//     <div style={{ padding: "20px" }}>
+//       <input
+//         type="text"
+//         placeholder="Search for a country..."
+//         value={searchTerm}
+//         onChange={(e) => setSearchTerm(e.target.value)}
+//         style={{
+//           width: "100%",
+//           padding: "10px",
+//           marginBottom: "20px",
+//           fontSize: "16px",
+//         }}
+//       />
+//       <div
+//         style={{
+//           display: "flex",
+//           flexWrap: "wrap",
+//           gap: "20px",
+//           justifyContent: "center",
+//         }}
+//       >
+//         {filteredCountries.length > 0 ? (
+//           filteredCountries.map((country) => (
+//             <div
+//               key={country.name}
+//               className="countryCard"
+//               style={{
+//                 border: "1px solid #ddd",
+//                 borderRadius: "10px",
+//                 padding: "10px",
+//                 width: "150px",
+//                 textAlign: "center",
+//                 boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+//               }}
+//             >
+//               <img
+//                 src={country.png}
+//                 alt={`${country.common} flag`}
+//                 style={{
+//                   width: "100%",
+//                   height: "100px",
+//                   objectFit: "cover",
+//                   borderRadius: "5px",
+//                   marginBottom: "10px",
+//                 }}
+//               />
+//               <p style={{ fontSize: "14px", fontWeight: "bold" }}>{country.common}</p>
+//             </div>
+//           ))
+//         ) : (
+//           <p style={{ fontSize: "18px", color: "#888" }}>No countries found</p>
+//         )}
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default CountrySearchApp;
+
 import React, { useEffect, useState } from "react";
 
 const CountrySearchApp = () => {
@@ -78,14 +174,18 @@ const CountrySearchApp = () => {
     const fetchCountries = async () => {
       try {
         const response = await fetch(
-          " https://countries-search-data-prod-812920491762.asia-south1.run.app/countries"
+          "https://restcountries.com/v3.1/all"
         );
         if (!response.ok) {
           throw new Error("Failed to fetch countries");
         }
         const data = await response.json();
-        setCountries(data);
-        setFilteredCountries(data); // Initialize with all countries
+        const formattedData = data.map((country) => ({
+          name: country.name.common,
+          flag: country.flags.svg,
+        }));
+        setCountries(formattedData);
+        setFilteredCountries(formattedData); // Initialize with all countries
       } catch (error) {
         console.error("Error fetching countries:", error);
       }
@@ -97,7 +197,7 @@ const CountrySearchApp = () => {
   useEffect(() => {
     // Filtering countries based on search term
     const filtered = countries.filter((country) =>
-      country.common.toLowerCase().includes(searchTerm.toLowerCase())
+      country.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setFilteredCountries(filtered);
   }, [searchTerm, countries]);
@@ -139,8 +239,8 @@ const CountrySearchApp = () => {
               }}
             >
               <img
-                src={country.png}
-                alt={`${country.common} flag`}
+                src={country.flag}
+                alt={`${country.name} flag`}
                 style={{
                   width: "100%",
                   height: "100px",
@@ -149,7 +249,7 @@ const CountrySearchApp = () => {
                   marginBottom: "10px",
                 }}
               />
-              <p style={{ fontSize: "14px", fontWeight: "bold" }}>{country.common}</p>
+              <p style={{ fontSize: "14px", fontWeight: "bold" }}>{country.name}</p>
             </div>
           ))
         ) : (
